@@ -1,0 +1,17 @@
+{% extends "layout.html.twig" %}
+
+{% block title "Hello world!" %}
+
+{% block content %}
+    <h1>Hi TEST!</h1>
+    <pre>
+	    {{ dump(repositories) }}
+	</pre>
+  	Open Issues: {{ repositories.open_issues_count }}
+  	Forks: {{ repositories.forks_count }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="css/hello.css" rel="stylesheet" />
+{% endblock %}

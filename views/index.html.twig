@@ -1,0 +1,123 @@
+{% extends "layout.html.twig" %}
+
+{% block title "Open Source - Purplapp" %}
+
+{% block content %}
+
+<div class="container-fluid header">
+  <div class="container">
+    <div class="col-md-12">
+      <div class="text-center header-icon">
+        <span class="octicon octicon-pulse" style="font-size: 80px;"></span>
+      </div>
+      <h1 class="text-center header-box-header">Purplapp - Open Source</h1>
+      <p class="text-center lead">Here are some statistics on our open source contributions.</p>
+    </div>
+  </div>
+</div>
+
+<div class="container content">
+	<pre>
+		{{ dump(repo_language) }}
+	</pre>
+	<p class="lead">
+		During the history of the project, there have been:
+	</p>
+	<div class="row">
+		<div class="col-md-2 col-md-offset-2">
+			<p class="text-center lead"><span class="octicon octicon-git-commit" style="font-size: 60px;"></span><br><strong>X</strong> commits</p>
+		</div>
+		<div class="col-md-2 col-md-offset-1">
+			<p class="text-center lead"><span class="octicon octicon-issue-closed" style="font-size: 60px;"></span><br><strong>{{ repo_issues|length }}</strong> issues</p>
+		</div>
+		<div class="col-md-2 col-md-offset-1">
+			<p class="text-center lead"><span class="octicon octicon-git-pull-request" style="font-size: 60px;"></span><br><strong>X</strong> pull requests</p>
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<div class="col-md-2 col-md-offset-2">
+			<p class="text-center lead"><span class="octicon octicon-organization" style="font-size: 60px;"></span><br><strong>{{ repo_contributors|length }}</strong> contributors</p>
+		</div>
+		<div class="col-md-2 col-md-offset-1">
+			<p class="text-center lead"><span class="octicon octicon-tag" style="font-size: 60px;"></span><br><strong>X</strong> releases</p>
+		</div>
+		<div class="col-md-2 col-md-offset-1">
+			<p class="text-center lead"><span class="octicon octicon-comment" style="font-size: 60px;"></span><br><strong>X</strong> comments</p>
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<div class="col-md-2 col-md-offset-2">
+			<p class="text-center lead"><span class="octicon octicon-repo-forked" style="font-size: 60px;"></span><br><strong>{{ repositories.forks_count }}</strong> forks</p>
+		</div>
+	</div>
+	<br>
+	<p class="lead">
+		The current version of Purplapp is v4.0. Since v3.0, there have been:
+	</p>
+	<div class="row">
+		<div class="col-md-2 col-md-offset-2">
+			<p class="text-center lead"><span class="octicon octicon-diff-added" style="font-size: 60px;"></span><br><strong>X</strong> additions</p>
+		</div>
+		<div class="col-md-2 col-md-offset-1">
+			<p class="text-center lead"><span class="octicon octicon-diff-removed" style="font-size: 60px;"></span><br><strong>X</strong> deletions</p>
+		</div>
+	</div>
+	<br><br>
+	<p class="lead">
+		In terms of programming languages used, here are the standings:
+	</p>
+	{% for key, value in repo_language %}  
+		{{key}}  
+		{{value}}  
+	{% endfor %}  
+
+	<div class="col-sm-6 col-md-6">
+		<div class="thumbnail">
+			<div class="caption">
+				<p>Stuff</p>
+			</div>
+			<canvas id="base_compare" style="width: 818px; height: 409px;"></canvas>
+			<table class="table table-condensed">
+				<tr>
+					<td class="ui-helper-center"><span style="color: #46BFBD;">&#9608;</span> @<?php echo $data_2['username']; ?>'s following count</td>
+				</tr>
+				<tr>
+					<td class="ui-helper-center"><span style="color: #F7464A;">&#9608;</span> @<?php echo $data_1['username']; ?>'s following count</td>
+				</tr>
+			</table>
+		</div>
+		<script>		    
+			var base_compareData = [
+			    {
+					// get the current (auth) user's following count			    	
+			        value: ,
+			        color:"#F7464A",
+			        highlight: "#FF5A5E",
+			        label: ""
+			    },
+			    {
+			        // get the other user's following count
+					value : ,
+			        color: "#46BFBD",
+			        highlight: "#5AD3D1",
+			        label: ""
+			    },		
+			];
+			var base_compareOptions = {
+				animateScale: true,
+				responsive: true
+			}
+		    var base_compare = document.getElementById("base_compare").getContext("2d");
+			new Chart(base_compare). PolarArea(base_compareData, base_compareOptions);
+		</script>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/static/css/opensource.css">
+{% endblock %}
