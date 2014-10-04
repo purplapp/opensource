@@ -17,9 +17,18 @@
 </div>
 
 <div class="container content">
+
 	<pre>
- 		<!-- {{ dump() }} -->
+ 		<!-- {{ dump(repo_statistics) }} -->
 	</pre>
+
+	{% set total = 0 %}
+	{% for contributor in repo_statistics %}
+		{% set total = total + contributor.total %}
+	{% endfor %}
+
+	{{ total }}
+
 	<p class="lead">
 		During the history of the project, there have been:
 	</p>

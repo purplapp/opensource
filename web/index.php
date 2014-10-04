@@ -44,6 +44,8 @@ $app->get("/", function () use ($app) {
     // get the releases from the repository
     $repo_releases = $client->api('repo')->releases()->all('purplapp', 'purplapp');
 
+    $repo_statistics = $client->api('repo')->statistics('purplapp', 'purplapp');
+
     // get total number of commits
     $commitsApi = $client->repo()->commits();
     $parameters = array('purplapp', 'purplapp', array('sha' => 'master'));
@@ -62,7 +64,7 @@ $app->get("/", function () use ($app) {
     // render the twig file
     return $app["twig"]->render(
         "index.html.twig",
-        compact("user", "repositories", "repo_contributors", "repo_language", "repo_issues", "repo_pull", "repo_commits", "repo_pull_comments", "repo_issues_comments", "repo_releases", "repo_issues_events")
+        compact("user", "repositories", "repo_contributors", "repo_language", "repo_issues", "repo_pull", "repo_commits", "repo_pull_comments", "repo_issues_comments", "repo_releases", "repo_issues_events", "repo_statistics")
     );
 });
 
