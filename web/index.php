@@ -1,8 +1,10 @@
 <?php
+
+ini_set("memory_limit", "256M");    // doing this is annoying but heh I've not got a better method *yet*
  
 require_once __DIR__.'/../vendor/autoload.php';
 
-date_default_timezone_set('UTC');   // compulsory thing to stop stupid errors
+date_default_timezone_set('UTC');   // compulsory thing to stop errors
  
 $app = new Silex\Application();
  
@@ -26,9 +28,9 @@ $app->get("/", function () use ($app) {
 
     // get the user and the user repositories
     $user = $client->api('organization')->show('purplapp');
-	$repositories = $client->api('repo')->show('purplapp', 'purplapp');
+    $repositories = $client->api('repo')->show('purplapp', 'purplapp');
 
-    // $repo_contributors = $client->api('repo')->contributors('purplapp', 'purplapp', false);
+    $repo_contributors = $client->api('repo')->contributors('purplapp', 'purplapp', false);
 
     // get the languages used in the repository
     $repo_language = $client->api('repo')->languages('purplapp', 'purplapp');
@@ -57,25 +59,24 @@ $app->get("/", function () use ($app) {
     $parameters = array('purplapp', 'purplapp', '');
     $repo_issues_comments = $paginator->fetchAll($issuesCommentsApi, 'all', $parameters);
 
-    // get total number of contributors
-    $contributorsApi = $client->repo();
-    $parameters = array('purplapp', 'purplapp', 'false');
-    $repo_issues_comments = $paginator->fetchAll($contributorsApi, 'contributors', $parameters);
-
+    // render the twig file
     return $app["twig"]->render(
         "index.html.twig",
         compact("user", "repositories", "repo_contributors", "repo_language", "repo_issues", "repo_pull", "repo_commits", "repo_pull_comments", "repo_issues_comments", "repo_releases", "repo_issues_events")
     );
 });
 
+// declare the routes
 $routes = array(
     'home' => array('url' => '/', 'template' => 'index.html.twig')
 );
 
+// routes related stuff
 foreach ($routes as $routeName => $data) {
     $app->get($data['url'], function() use($app, $data) {
         return $app['twig']->render($data['template']);
     })->bind($routeName);
 }
 
+// run the app
 $app->run();
