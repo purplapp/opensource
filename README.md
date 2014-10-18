@@ -1,3 +1,7 @@
+**This has now been merged into the [master Purplapp repo on GitHub](https://github.com/purplapp/purplapp). Check it out over there.**
+
+---
+
 opensource
 ==========
 
